@@ -1,7 +1,8 @@
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
-import Room from "../../components/room/room";
-import CreateRoomPage from "../create-room-page/create-room";
-import RoomJoinPage from "../room-join-page/room-join-page";
+import Room from "../components/room/room";
+import CreateRoomPage from "./create-room-page";
+import RoomJoinPage from "./room-join-page";
+
 
 const HomePage = () => {
     return ( 
