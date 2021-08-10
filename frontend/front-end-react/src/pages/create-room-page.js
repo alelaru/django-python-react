@@ -1,7 +1,7 @@
 import { FormControl, FormHelperText, Radio, RadioGroup, Typography, FormControlLabel, TextField, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid"
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios"
 
 const CreateRoomPage = () => {
@@ -9,6 +9,7 @@ const CreateRoomPage = () => {
     const defaultVotes = 2;
     const [guestCanPause, setguestCanPause] = useState(true)
     const [votesToSkip, setvotesToSkip] = useState(defaultVotes)
+    const history = useHistory()
 
     const handleCreateRoomBotton = async (e) => {
         e.preventDefault();
@@ -25,13 +26,14 @@ const CreateRoomPage = () => {
         await axios.post('http://localhost:8000/api/create-room', {'guest_can_pause': guestCanPause, 'votes_to_skip': votesToSkip})
         // await axios(options)
             .then((res) => {
-                console.log(res.data);
                 setguestCanPause(true)
                 setvotesToSkip(defaultVotes)
+                history.push(`/room/${res.data.code}`)
             })
             .catch(e =>
              {
                 console.log("There is an error with your request",e.message)
+                console.log("Hey Im here")
              })
 
         console.log("Entré");
