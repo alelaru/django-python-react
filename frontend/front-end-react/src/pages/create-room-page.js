@@ -2,7 +2,7 @@ import { FormControl, FormHelperText, Radio, RadioGroup, Typography, FormControl
 import Grid from "@material-ui/core/Grid"
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios"
 
 const CreateRoomPage = () => {
 
@@ -10,8 +10,29 @@ const CreateRoomPage = () => {
     const [guestCanPause, setguestCanPause] = useState(true)
     const [votesToSkip, setvotesToSkip] = useState(defaultVotes)
 
-    const handleCreateRoomBotton = (e) => {
+    const handleCreateRoomBotton = async (e) => {
         e.preventDefault();
+
+
+
+        // const options = {
+        //     method: 'POST',
+        //     headers: { 'content-type': 'application/json' },
+        //     data: {'guest_can_pause': guestCanPause, 'votes_to_skip': votesToSkip},
+        //     url:'http://localhost:8000/api/create-room',
+        // };
+
+        await axios.post('http://localhost:8000/api/create-room', {'guest_can_pause': guestCanPause, 'votes_to_skip': votesToSkip})
+        // await axios(options)
+            .then((res) => {
+                console.log(res.data);
+                setguestCanPause(true)
+                setvotesToSkip(defaultVotes)
+            })
+            .catch(e =>
+             {
+                console.log("There is an error with your request",e.message)
+             })
 
         console.log("Entré");
     }
@@ -30,7 +51,7 @@ const CreateRoomPage = () => {
                             Guest Control of Playback State
                         </div>
                     </FormHelperText>
-                        <RadioGroup row default='true' onChange={({target}) => setvotesToSkip(target.value === 'true' ? true : false)}>
+                        <RadioGroup row default={true} onChange={({target}) => setvotesToSkip(target.value === 'true' ? true : false)}>
                             <FormControlLabel 
                                 value='true' 
                                 control={<Radio color="primary"/>}
