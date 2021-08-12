@@ -23,7 +23,7 @@ const CreateEditForm = ( { handleButtonPressed, text }) => {
                             Guest Control of Playback State
                         </div>
                     </FormHelperText>
-                        <RadioGroup row default={true} onChange={({target}) => setvotesToSkip(target.value === 'true' ? true : false)}>
+                        <RadioGroup row default={true} onChange={({target}) => setguestCanPause(target.value === 'true' ? true : false)}>
                             <FormControlLabel 
                                 value='true' 
                                 control={<Radio color="primary"/>}
@@ -59,7 +59,7 @@ const CreateEditForm = ( { handleButtonPressed, text }) => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} align="center">
-                <Button onClick={handleButtonPressed} color="primary" variant="contained">{text} a Room</Button>
+                <Button onClick={() => handleButtonPressed(votesToSkip, guestCanPause)} color="primary" variant="contained">{text} a Room</Button>
             </Grid>
             {/* <Grid item xs={12} align="center">
                 <Button color="secondary" variant="contained" to="/" component={Link}>Back</Button>

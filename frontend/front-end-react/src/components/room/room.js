@@ -16,7 +16,6 @@ const Room = () => {
     const { roomCode } = useParams()
 
     useEffect(() => {
-        
         const getRoomDetails = async () => {
             await axios.get(`http://localhost:8000/api/get-room?code=${roomCode}`)
                 .then(({data}) => 
@@ -32,8 +31,21 @@ const Room = () => {
         getRoomDetails();
     }, [roomCode]);
 
-    const editRoom = () =>{
+    const editRoom = async (votes, pause) =>{
 
+        await axios.post('http://localhost:8000/api/update-room', {'guest_can_pause': pause, 'votes_to_skip': votes, 'code': roomCode})
+        // await axios(options)
+            .then((res) => {
+                console.log("The update was successfull");
+                // setguestCanPause(true)
+                // setvotesToSkip(defaultVotes)
+                // history.push(`/room/${res.data.code}`)
+            })
+            .catch(e =>
+             {
+                console.log("There is an error with your request",e.message)
+                console.log("This was not successfull")
+             })
     }
 
     return ( 
@@ -67,18 +79,12 @@ const Room = () => {
                     aria-describedby="simple-modal-description"
                 >
                     {
-                        
-                        // <div className="modal">
-                        // </div>
-                        // classes={{position: 'absolute', right:'20px', top: '20px'}}
                         <div className="modal">
                         <Grid item xs={12}>
                             <div className="img-container">
-                            <Button sx={{
-                                margin: 500,
-                            }} onClick={() => setIsModalOpen(!isModalOpen)}>
-                                    <img className="img" src={Image} alt="close"></img>
-                                </Button>
+                            <Button onClick={() => setIsModalOpen(!isModalOpen)}>
+                                <img className="img" src={Image} alt="close"></img>
+                            </Button>
                             </div>
                         </Grid>
                         <Grid item xs={12}>
