@@ -29,7 +29,7 @@ const Room = () => {
         }    
 
         getRoomDetails();
-    }, [roomCode]);
+    }, [roomCode, guestCanPause, votesToSkip]);
 
     const editRoom = async (votes, pause) =>{
         console.log("votes", votes);
@@ -37,12 +37,11 @@ const Room = () => {
         console.log("votes", roomCode);
         console.log(`http://localhost:8000/api/update-room/code=${roomCode}`);
         await axios.patch(`http://localhost:8000/api/update-room?code=${roomCode}`, {'guest_can_pause': pause, 'votes_to_skip': votes, 'code': roomCode})
-        // await axios(options)
             .then((res) => {
                 console.log("The update was successfull");
-                // setguestCanPause(true)
-                // setvotesToSkip(defaultVotes)
-                // history.push(`/room/${res.data.code}`)
+                setIsModalOpen(!isModalOpen)
+                setguestCanPause(pause)
+                setvotesToSkip(votes)
             })
             .catch(e =>
              {

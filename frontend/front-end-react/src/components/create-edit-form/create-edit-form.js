@@ -28,7 +28,9 @@ const CreateEditForm = ( { handleButtonPressed, text }) => {
                                 value='true' 
                                 control={<Radio color="primary"/>}
                                 label="Play/Pause"
-                                labelPlacement="bottom">
+                                labelPlacement="bottom"
+                                checked='true'
+                                >
                             </FormControlLabel>
                             <FormControlLabel 
                                 value='false' 
