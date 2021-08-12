@@ -32,8 +32,11 @@ const Room = () => {
     }, [roomCode]);
 
     const editRoom = async (votes, pause) =>{
-
-        await axios.post('http://localhost:8000/api/update-room', {'guest_can_pause': pause, 'votes_to_skip': votes, 'code': roomCode})
+        console.log("votes", votes);
+        console.log("pause", pause);
+        console.log("votes", roomCode);
+        console.log(`http://localhost:8000/api/update-room/code=${roomCode}`);
+        await axios.patch(`http://localhost:8000/api/update-room?code=${roomCode}`, {'guest_can_pause': pause, 'votes_to_skip': votes, 'code': roomCode})
         // await axios(options)
             .then((res) => {
                 console.log("The update was successfull");
@@ -44,7 +47,7 @@ const Room = () => {
             .catch(e =>
              {
                 console.log("There is an error with your request",e.message)
-                console.log("This was not successfull")
+                console.log("No se pudo mandar esta verga")
              })
     }
 

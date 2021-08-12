@@ -33,20 +33,23 @@ class UpdateRoom(APIView):
             votes_to_skip = serializer.data.get("votes_to_skip")
             code = serializer.data.get("code")
 
+            print("Im Inside")
+
             queryset = Room.objects.filter(code=code)
             if queryset.exists():
                 # return Response({"msg", "Room doesnt exist..."}, status=status.HTTP_404_NOT_FOUND)
+                print("It exist and now im editing everything")
                 room = queryset[0]
                 room.guest_can_pause = guest_can_pause
                 room.votes_to_skip = votes_to_skip
                 room.save(update_fields=['guest_can_pause', 'votes_to_skip'])
                 return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
-            # else:
-            #     room = Room(host=host, guest_can_pause=guest_can_pause,
-            #                 votes_to_skip=votes_to_skip)
-            #     room.save()
-            #     self.request.session['room_code'] = room.code
-            #     return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
+                # else:
+                #     room = Room(host=host, guest_can_pause=guest_can_pause,
+                #                 votes_to_skip=votes_to_skip)
+                #     room.save()
+                #     self.request.session['room_code'] = room.code
+                #     return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
         return Response({"Bad Request", "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)
 
 
