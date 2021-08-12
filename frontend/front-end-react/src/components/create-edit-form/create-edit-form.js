@@ -1,49 +1,19 @@
-import { FormControl, FormHelperText, Radio, RadioGroup, Typography, FormControlLabel, TextField, Button } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid"
+import { FormControl, FormHelperText, Grid, Typography, RadioGroup, Button, FormControlLabel, TextField, Radio } from "@material-ui/core";
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios"
+import { Link } from "react-router-dom";
 
-const CreateRoomPage = () => {
+const CreateEditForm = ( { handleButtonPressed, text }) => {
 
     const defaultVotes = 2;
     const [guestCanPause, setguestCanPause] = useState(true)
     const [votesToSkip, setvotesToSkip] = useState(defaultVotes)
-    const history = useHistory()
-
-    const handleCreateRoomBotton = async (e) => {
-        e.preventDefault();
-
-
-
-        // const options = {
-        //     method: 'POST',
-        //     headers: { 'content-type': 'application/json' },
-        //     data: {'guest_can_pause': guestCanPause, 'votes_to_skip': votesToSkip},
-        //     url:'http://localhost:8000/api/create-room',
-        // };
-
-        await axios.post('http://localhost:8000/api/create-room', {'guest_can_pause': guestCanPause, 'votes_to_skip': votesToSkip})
-        // await axios(options)
-            .then((res) => {
-                setguestCanPause(true)
-                setvotesToSkip(defaultVotes)
-                history.push(`/room/${res.data.code}`)
-            })
-            .catch(e =>
-             {
-                console.log("There is an error with your request",e.message)
-                console.log("Hey Im here")
-             })
-
-        console.log("Entré");
-    }
 
     return ( 
+
         <Grid container spacing={1}>
             <Grid item xs={12} align="center">
                 <Typography component='h4' variant='h4'>
-                    Create a Room
+                    {text} the Room
                 </Typography>
             </Grid>
             <Grid item xs={12} align="center">
@@ -53,7 +23,7 @@ const CreateRoomPage = () => {
                             Guest Control of Playback State
                         </div>
                     </FormHelperText>
-                        <RadioGroup row default={true} onChange={({target}) => setguestCanPause(target.value === 'true' ? true : false)}>
+                        <RadioGroup row default={true} onChange={({target}) => setvotesToSkip(target.value === 'true' ? true : false)}>
                             <FormControlLabel 
                                 value='true' 
                                 control={<Radio color="primary"/>}
@@ -89,13 +59,15 @@ const CreateRoomPage = () => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} align="center">
-                <Button onClick={handleCreateRoomBotton} color="primary" variant="contained">Create a Room</Button>
+                <Button onClick={handleButtonPressed} color="primary" variant="contained">{text} a Room</Button>
             </Grid>
-            <Grid item xs={12} align="center">
+            {/* <Grid item xs={12} align="center">
                 <Button color="secondary" variant="contained" to="/" component={Link}>Back</Button>
-            </Grid>
-        </Grid>
+            </Grid> */}
+        </Grid>        
+
+
      );
 }
  
-export default CreateRoomPage;
+export default CreateEditForm;

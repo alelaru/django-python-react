@@ -15,14 +15,11 @@ const RoomJoinPage = () => {
         await axios.post(`http://localhost:8000/api/join-room`, `code=${roomCode}`)
             .then((res) => {
                 console.log(res.data);
-                setRoomCode("")
-                seterror("")
+
                 history.push(`/room/${roomCode}`)
             }).catch(e => {
-                console.log("Entraron en error");
                 console.log(e.message);
             })
-
     }
 
     return ( 

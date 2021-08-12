@@ -8,10 +8,23 @@ from rest_framework import serializers
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('id', 'code', 'host', 'guest_can_pause', 'votes_to_skip', 'created_at')
-        
+        fields = ('id', 'code', 'host', 'guest_can_pause',
+                  'votes_to_skip', 'created_at')
+
 # This is for the create Room
+
+
 class CreateRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ('guest_can_pause', 'votes_to_skip')
+
+# Serializer to get the information we need
+
+
+class UpdateSerializer(serializers.ModelSerializer):
+    code = serializers.CharField(validators=[])
+
+    class Meta:
+        model = Room
+        fields = ('guest_can_pause', 'votes_to_skip', 'code')
