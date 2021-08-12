@@ -2,6 +2,7 @@ import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import Alert from "@material-ui/lab/Alert"
 
 const RoomJoinPage = () => {
 
@@ -19,6 +20,7 @@ const RoomJoinPage = () => {
                 history.push(`/room/${roomCode}`)
             }).catch(e => {
                 console.log(e.message);
+                seterror("Check the name of the room again and try again")
             })
     }
 
@@ -32,7 +34,7 @@ const RoomJoinPage = () => {
             </Grid>
             <Grid item xs={12}>
                 <TextField 
-                    error={error} 
+                    error={error.length > 0} 
                     label="code" 
                     placeholder="Enter a Room Code" 
                     value={roomCode} 
@@ -48,6 +50,7 @@ const RoomJoinPage = () => {
                 <Button variant="contained" color="secondary" to="/" component={Link}>Back</Button>
             </Grid>
         </Grid>
+        
 
      );
 }
